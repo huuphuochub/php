@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seating Chart</title>
+<style>
+
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+}
+
+.screen {
+  width: 100%;
+  text-align: center;
+  padding: 10px;
+  margin-bottom: 20px;
+  background-color: #8a8b8f;
+  color: white;
+  font-size: 20px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.chart-container {
+  justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+
+.row-labels {
+  font-size: 20px;
+  padding-right: 10px;
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; 
+}
+
+.row-label {
+    padding: 1px;
+    height: 45.5px;
+}
+
+
+.row {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 5px;
+}
+
+.seat {
+  width: 30px;
+  height: 30px;
+  background-color: #ffffff;
+  margin: 5px;
+  border: 2px solid #9e9e9e;
+  border-radius: 5px;
+  cursor: pointer;
+  position: relative; 
+  transition: transform 0.1s;
+}
+
+.double {
+  width: 60px;
+  background-color: #ffeb3b; 
+}
+
+.seat:hover {
+  transform: scale(1.1); 
+  z-index: 2; 
+}
+
+.seat:hover::after {
+
+  content: attr(data-seat-number);
+  visibility: visible;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px 10px;
+  position: absolute;
+  z-index: 1;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  font-size: 14px;
+}
+
+.selected {
+  background-color: #4caf50; 
+  box-shadow: 0 0 11px #4caf50; 
+}
+
+
+#seating-chart {
+  margin-bottom: 20px;
+}
+
+.legend {
+  display: flex;
+  justify-content: center;
+  padding: 10px;
+}
+
+.legend div {
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+}
+
+.legend .seat {
+  margin-right: 5px;
+}
+.not-available {
+  background-color: #757575; 
+}
+
+.sold {
+  background-color: #dd2c00; 
+}
+
+
+</style>
+</head>
+<body>
+
+<div class="screen">Screen</div>
+
+<div class="chart-container">
+  <div class="row-labels">
+    
+  </div>
+  <div id="seating-chart">
+    
+  </div>
+</div>
+<div class="legend">
+    <div>
+      <div class="seat"></div>
+      <span>Có sẵn</span>
+    </div>
+    <div>
+      <div class="seat selected"></div>
+      <span>Ghế bạn chọn</span>
+    </div>
+    <div>
+      <div class="seat not-available"></div>
+      <span>Không thể chọn</span>
+    </div>
+    <div>
+      <div class="seat sold"></div>
+      <span>Đã bán</span>
+    </div>
+  </div>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const chart = document.getElementById('seating-chart');
+    const labelsContainer = document.querySelector('.row-labels');
+    const rowLabels = 'ABCDEFGHJKLM'.split(''); // Row labels without 'I'
+    
+    rowLabels.forEach((label, index) => {
+      // Add row label
+      const rowLabel = document.createElement('div');
+      rowLabel.className = 'row-label';
+      rowLabel.textContent = label;
+      labelsContainer.appendChild(rowLabel);
+      
+      // Add row
+      const row = document.createElement('div');
+      row.className = 'row';
+      
+      // Add seats to the row
+      if (index === rowLabels.length - 1) { // Check if it's the last row
+        // Only add double seats in the last row
+        for (let s = 0; s < 8; s++) {
+          const seat = document.createElement('div');
+          seat.className = 'seat double';
+          seat.setAttribute('data-seat-number', label + (s + 1) * 2); // Seat numbering for double
+          seat.addEventListener('click', function() { // Add click event to toggle selection
+            seat.classList.toggle('selected');
+          });
+          row.appendChild(seat);
+        }
+      } else {
+        // Add single seats in all other rows
+        for (let s = 0; s < 17; s++) {
+          const seat = document.createElement('div');
+          seat.className = 'seat';
+          seat.setAttribute('data-seat-number', label + (s + 1));
+          seat.addEventListener('click', function() { // Add click event to toggle selection
+            seat.classList.toggle('selected');
+          });
+          row.appendChild(seat);
+        }
+      }
+      
+      chart.appendChild(row);
+      
+    });
+    seat.addEventListener('click', function() {
+    // Toggle the 'selected' class on click
+    this.classList.toggle('selected');
+  });
+  });
+  
+</script>
+
+</body>
+</html>

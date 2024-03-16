@@ -1,0 +1,10 @@
+RewriteEngine On
+RewriteBase /PRO1014-N6/public/
+
+# Bỏ qua việc viết lại nếu URL trỏ đến một file thực sự tồn tại
+RewriteCond %{REQUEST_FILENAME} !-f
+# Bỏ qua việc viết lại nếu URL trỏ đến một thư mục thực sự tồn tại
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# Viết lại URL từ dạng /product_detail/ID thành index.php?page=product_detail&id=ID
+RewriteRule ^product_detail/([0-9]+)$ http://localhost/PRO1014-N6/public/index.php?page=product_detail&id=$1 [QSA,L]

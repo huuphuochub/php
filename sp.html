@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Movie Seat Booking</title>
+
+</head>
+<body>
+
+
+
+    <style>
+        * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+    
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+    }
+    
+    .container {
+        width: 90%;
+        margin: 20px auto;
+        background-color: #fff;
+        padding: 20px;
+    }
+    
+    .cinema-info p, .legend p, .actions button {
+        margin-bottom: 10px;
+    }
+    
+    .screen {
+        background-color: #444;
+        color: #fff;
+        padding: 5px;
+        text-align: center;
+    }
+    
+    .seats {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .seat-row {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 5px;
+    }
+    
+    .seat {
+        background-color: #ccc;
+        margin: 3px;
+        padding: 10px 15px;
+        cursor: pointer;
+        user-select: none;
+        border-radius: 5%;
+        width: 60px; /* Set the width to your desired value */
+        height: 30px; /* Set the height to your desired value */
+        position: relative; /* Added position relative for tooltip */
+    }
+    
+    .seat.unavailable {
+        background-color: #555;
+        cursor: not-allowed;
+    }
+    
+    .seat.selected {
+        background-color: #6c7ae0;
+    }
+    
+    /* Add the following styles for the seat number tooltip */
+    .seat:hover::after {
+        content: attr(data-seat-number);
+        position: absolute;
+        top: -25px; /* Adjust as needed */
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: #333;
+        color: #fff;
+        padding: 5px 10px;
+        border-radius: 5px;
+        font-size: 14px;
+        white-space: nowrap;
+    }
+    
+    .legend {
+        display: flex;
+        justify-content: space-around;
+        margin-top: 10px;
+    }
+    
+    .legend .example {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        border: 1px solid #333;
+        margin-right: 5px;
+    }
+    
+    .legend .selected {
+        background-color: #6c7ae0;
+    }
+    
+    .legend .unavailable {
+        background-color: #555;
+    }
+    
+    .actions {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 20px;
+    }
+    
+    .actions button {
+        padding: 10px 20px;
+        cursor: pointer;
+        border: none;
+        background-color: #333;
+        color: #fff;
+    }
+    
+        .total {
+        margin-top: 20px;
+       
+    }
+    
+    #total-amount {
+        font-weight: bold;
+        color: #333; 
+    }
+    
+    </style>
+<div class="container">
+    <div class="cinema-info">
+        <p>Chiếm Đoạt</p>
+        <p><strong>Cinestar Quốc Thanh</strong></p>
+        <p>Showtime <strong>15:00 04/12/2023</strong></p>
+        <p>Auditorium <strong>05</strong> - Seat ... </p>
+        <div class="total">
+            <p>TỔNG ĐƠN HÀNG <span id="total-amount">0 ₫</span></p>
+        </div>
+        
+    </div>
+    
+    <div class="seat-selection">
+        <div class="screen">SCREEN</div>
+        <div class="seats">
+            <!-- Example row -->
+            <div class="seat-row">
+                <div class="seat" data-seat-number="A1"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="A2"><span class="seat-number"></span></div>
+                <div class="seat unavailable" data-seat-number="A3"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="A4"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="A5"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="A6"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="A7"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="A8"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="A9"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="A10"><span class="seat-number"></span></div>
+            </div>
+            <div class="seat-row">
+                <div class="seat" data-seat-number="B1"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="B2"><span class="seat-number"></span></div>
+                <div class="seat unavailable" data-seat-number="B3"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="B4"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="B5"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="B6"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="B7"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="B8"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="B9"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="B10"><span class="seat-number"></span></div>
+                
+            </div>
+            <div class="seat-row">
+                <!-- Copy this row for seats C1 to C10 -->
+                <div class="seat" data-seat-number="C1"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="C2"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="C3"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="C4"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="C5"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="C6"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="C7"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="C8"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="C9"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="C10"><span class="seat-number"></span></div>
+                <!-- End of row -->
+            </div>
+            <!-- Row D -->
+            <!-- Row D -->
+            <div class="seat-row">
+                <!-- Copy this row for seats D1 to D10 -->
+                <div class="seat" data-seat-number="D1"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="D2"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="D3"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="D4"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="D5"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="D6"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="D7"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="D8"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="D9"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="D10"><span class="seat-number"></span></div>
+                <!-- End of row -->
+            </div>
+            <!-- Row E -->
+            <div class="seat-row">
+                <!-- Copy this row for seats E1 to E10 -->
+                <div class="seat" data-seat-number="E1"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="E2"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="E3"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="E4"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="E5"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="E6"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="E7"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="E8"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="E9"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="E10"><span class="seat-number"></span></div>
+                <!-- End of row -->
+            </div>
+            <!-- Row F -->
+            <div class="seat-row">
+                <!-- Copy this row for seats F1 to F10 -->
+                <div class="seat" data-seat-number="F1"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="F2"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="F3"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="F4"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="F5"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="F6"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="F7"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="F8"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="F9"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="F10"><span class="seat-number"></span></div>
+                <!-- End of row -->
+            </div>
+            <!-- Row G -->
+            <div class="seat-row">
+                <!-- Copy this row for seats G1 to G10 -->
+                <div class="seat" data-seat-number="G1"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="G2"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="G3"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="G4"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="G5"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="G6"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="G7"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="G8"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="G9"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="G10"><span class="seat-number"></span></div>
+                <!-- End of row -->
+            </div>
+            <!-- Row H -->
+            <div class="seat-row">
+                <!-- Copy this row for seats H1 to H10 -->
+                <div class="seat" data-seat-number="H1"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="H2"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="H3"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="H4"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="H5"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="H6"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="H7"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="H8"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="H9"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="H10"><span class="seat-number"></span></div>
+                <!-- End of row -->
+            </div>
+            <!-- Row J -->
+            <div class="seat-row">
+                <!-- Copy this row for seats J1 to J10 -->
+                <div class="seat" data-seat-number="J1"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="J2"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="J3"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="J4"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="J5"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="J6"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="J7"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="J8"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="J9"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="J10"><span class="seat-number"></span></div>
+                <!-- End of row -->
+            </div>
+            <!-- Row K -->
+            <div class="seat-row">
+                <!-- Copy this row for seats K1 to K10 -->
+                <div class="seat" data-seat-number="K1"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="K2"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="K3"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="K4"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="K5"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="K6"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="K7"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="K8"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="K9"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="K10"><span class="seat-number"></span></div>
+                <!-- End of row -->
+            </div>
+            <!-- Row L -->
+            <div class="seat-row">
+                <!-- Copy this row for seats L1 to L10 -->
+                <div class="seat" data-seat-number="L1"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="L2"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="L3"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="L4"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="L5"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="L6"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="L7"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="L8"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="L9"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="L10"><span class="seat-number"></span></div>
+                <!-- End of row -->
+            </div>
+            <!-- Row M -->
+            <div class="seat-row">
+                <!-- Copy this row for seats M1 to M10 -->
+                <div class="seat" data-seat-number="M1"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="M2"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="M3"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="M4"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="M5"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="M6"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="M7"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="M8"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="M9"><span class="seat-number"></span></div>
+                <div class="seat" data-seat-number="M10"><span class="seat-number"></span></div>
+                <!-- End of row -->
+            </div>
+        </div>
+    </div>
+    <div class="legend">
+        <div><span class="seat example"></span> <p>Available</p></div>
+        <div><span class="seat example selected"></span> <p>Selected</p></div>
+        <div><span class="seat example unavailable"></span> <p>Unavailable</p></div>
+    </div>
+    <div class="actions">
+        <button class="btn-back">← Back</button>
+        <button class="btn-continue">Continue →</button>
+    </div>
+</div>
+<script>
+    // JavaScript to toggle seat numbers on hover
+    const seats = document.querySelectorAll('.seat');
+    
+    seats.forEach(seat => {
+        seat.addEventListener('mouseenter', () => {
+            const seatNumber = seat.querySelector('.seat-number');
+            seatNumber.style.display = 'block';
+        });
+    
+        seat.addEventListener('mouseleave', () => {
+            const seatNumber = seat.querySelector('.seat-number');
+            seatNumber.style.display = 'none';
+        });
+    });
+    // Lấy danh sách tất cả các ghế
+
+
+// Lặp qua từng ghế và thêm sự kiện click
+seats.forEach(seat => {
+    seat.addEventListener('click', () => {
+        // Kiểm tra xem ghế đã được chọn hay chưa
+        if (seat.classList.contains('selected')) {
+            // Nếu đã chọn, hủy bỏ việc chọn ghế (chuyển về trạng thái ban đầu)
+            seat.classList.remove('selected');
+        } else {
+            // Nếu chưa chọn, chọn ghế (thay đổi sang màu đã chọn)
+            seat.classList.add('selected');
+        }
+    });
+});
+
+    </script>
+</body>
+</html>

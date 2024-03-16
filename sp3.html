@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thanh toán thành công</title>
+    <style>
+        /* CSS cho trang thanh toán thành công */
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Thanh toán thành công!</h1>
+    <p>Cảm ơn bạn đã thực hiện thanh toán thành công. Hãy kiểm tra email của bạn để xem chi tiết đơn hàng.</p>
+    <p><a href="index.php">Quay lại trang chủ</a></p>
+
+    <script>
+        // Simulate a successful payment (you should replace this with your actual payment logic)
+        function processPayment() {
+            // Simulate a successful payment process
+            setTimeout(function() {
+                // Redirect to the success page
+                window.location.href = "payment-success.html";
+            }, 2000); // Delay for 2 seconds to simulate payment processing
+        }
+    </script>
+</body>
+</html>
